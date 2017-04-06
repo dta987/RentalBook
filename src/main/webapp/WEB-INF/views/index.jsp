@@ -24,12 +24,14 @@ body, h1, h2, h3, h4, h5, h6 {
 		<div class="w3-white w3-xlarge"
 			style="max-width: 1200px; margin: auto">
 			<div class="w3-center w3-padding-16">
-				<form id="searchBookForm" action="${pageContext.request.contextPath}/book/searchbook" method="get">
+				<form id="searchBookForm"
+					action="${pageContext.request.contextPath}/book/searchbook"
+					method="get">
 					<div class="input-group">
 						<input type="text" class="form-control"
-							placeholder="Search for..."> <span
-							class="input-group-btn">
-							<button class="btn btn-defult" type="button">search</button>
+							placeholder="Search for..." id="search_name" name="search_name">
+						<span class="input-group-btn">
+							<button class="btn btn-defult" type="submit">search</button>
 						</span>
 					</div>
 				</form>
@@ -43,30 +45,12 @@ body, h1, h2, h3, h4, h5, h6 {
 
 		<!-- First Photo Grid-->
 		<div class="w3-row-padding w3-padding-16 w3-center" id="food">
-			<div class="w3-quarter">
-				<img src="/w3images/sandwich.jpg" alt="Sandwich" style="width: 100%">
-				<h3>The Perfect Sandwich, A Real NYC Classic</h3>
-				<p>Just some random text, lorem ipsum text praesent tincidunt
-					ipsum lipsum.</p>
-			</div>
-			<div class="w3-quarter">
-				<img src="/w3images/steak.jpg" alt="Steak" style="width: 100%">
-				<h3>Let Me Tell You About This Steak</h3>
-				<p>Once again, some random text to lorem lorem lorem lorem ipsum
-					text praesent tincidunt ipsum lipsum.</p>
-			</div>
-			<div class="w3-quarter">
-				<img src="/w3images/cherries.jpg" alt="Cherries" style="width: 100%">
-				<h3>Cherries, interrupted</h3>
-				<p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
-				<p>What else?</p>
-			</div>
-			<div class="w3-quarter">
-				<img src="/w3images/wine.jpg" alt="Pasta and Wine"
-					style="width: 100%">
-				<h3>Once Again, Robust Wine and Vegetable Pasta</h3>
-				<p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
-			</div>
+			<c:forEach var="book" items="${bookList}">
+				<div class="w3-quarter">
+					<h3>${book.getBook_name()}</h3>
+					<p></p>
+				</div>
+			</c:forEach>
 		</div>
 
 		<script>

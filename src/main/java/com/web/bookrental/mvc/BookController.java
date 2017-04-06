@@ -44,7 +44,7 @@ public class BookController {
 
 		ArrayList<Book> bookList = service.searchBook(search_name);
 
-		model.addAllAttributes(bookList); // 검색결과목록
+		model.addAttribute("bookList", bookList);// 검색결과목록
 
 		return "index";
 
