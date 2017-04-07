@@ -12,6 +12,8 @@ public interface BookMapper {
 
 	public Book selectByBookId(int book_id);
 
-	public int updatByRetalBook(int book_id);
+	public int updatByRetalBook(Book book);
+
+	public int updateByReturnBook(Book book);
 
 }

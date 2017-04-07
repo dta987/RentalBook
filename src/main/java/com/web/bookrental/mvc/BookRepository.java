@@ -30,14 +30,15 @@ public class BookRepository {
 
 	}
 
-	// 수정
-	public int updatByRetalBook(int book_id) {
-		return mapper.updatByRetalBook(book_id);
+	// 도서대여
+	public int updatByRetalBook(Book book) {
+		return mapper.updatByRetalBook(book);
 	}
 
-	public void updateByReturnBook(int book_id) {
-		// TODO Auto-generated method stub
-		
+	// 도서반납
+	public int updateByReturnBook(Book book) {
+		return mapper.updateByReturnBook(book);
+
 	}
 
 }

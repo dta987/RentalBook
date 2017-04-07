@@ -9,21 +9,54 @@ public class Book {
 	private String company;
 	private String writer;
 	private int price;
+	private String context;
 	private int rental_count = 0;
 	private int over_time_count = 0;
-	private Date rental_time;
-	private Date return_time;
-	private Date return_schedule_time;
+	private String rental_time;
+	private String return_time;
+	private String return_schedule_time;
 	private Boolean rental_check = false;
-	
+
 	@Override
 	public String toString() {
-		return "Book [도서번호=" + book_id + ", 도서명=" + book_name + ", 출판사=" + company + ", 저자=" + writer
-				+ ", 가격=" + price + ", 대여=" + rental_check + "]";
+		return "Book [도서번호=" + book_id + ", 도서명=" + book_name + ", 출판사=" + company + ", 저자=" + writer + ", 가격=" + price
+				+ ", 대여=" + rental_check + "]";
 	}
 
 	public int getBook_id() {
 		return book_id;
+	}
+
+	public String getContext() {
+		return context;
+	}
+
+	public String getRental_time() {
+		return rental_time;
+	}
+
+	public void setRental_time(String rental_time) {
+		this.rental_time = rental_time;
+	}
+
+	public String getReturn_time() {
+		return return_time;
+	}
+
+	public void setReturn_time(String return_time) {
+		this.return_time = return_time;
+	}
+
+	public String getReturn_schedule_time() {
+		return return_schedule_time;
+	}
+
+	public void setReturn_schedule_time(String return_schedule_time) {
+		this.return_schedule_time = return_schedule_time;
+	}
+
+	public void setContext(String context) {
+		this.context = context;
 	}
 
 	public void setBook_id(int book_id) {
@@ -76,30 +109,6 @@ public class Book {
 
 	public void setOver_time_count(int over_time_count) {
 		this.over_time_count = over_time_count;
-	}
-
-	public Date getRental_time() {
-		return rental_time;
-	}
-
-	public void setRental_time(Date rental_time) {
-		this.rental_time = rental_time;
-	}
-
-	public Date getReturn_time() {
-		return return_time;
-	}
-
-	public void setReturn_time(Date return_time) {
-		this.return_time = return_time;
-	}
-
-	public Date getReturn_schedule_time() {
-		return return_schedule_time;
-	}
-
-	public void setReturn_schedule_time(Date return_schedule_time) {
-		this.return_schedule_time = return_schedule_time;
 	}
 
 	public Boolean getRental_check() {

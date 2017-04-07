@@ -10,39 +10,43 @@
 		<selectKey keyProperty="book_id" resultType="int" order="BEFORE">
 			select book_seq.nextval from dual
 		</selectKey>
-		insert into book(book_id, book_name, company, writer, price)
-		values(#{book_id}, #{book_name}, #{company}, #{writer}, #{price});
+		insert into book(book_id, book_name, company, writer, price, context)
+		values(#{book_id}, #{book_name}, #{company}, #{writer}, #{price}, #{context})
 	</insert>
 
 	<!-- 도서검색 -->
-	<resultMap type="com.web.bookrental.dto.Book" id="selectByBookName">
+	<resultMap type="com.web.bookrental.dto.Book" id="selectByBook">
 		<id property="book_id" column="book_id" />
 		<result property="book_name" column="book_name" />
 		<result property="company" column="company" />
 		<result property="writer" column="writer" />
 		<result property="price" column="price" />
+		<result property="context" column="context" />
 		<result property="rental_check" column="rental_check" />
 	</resultMap>
-
+	
 	<!-- book_name 검색 -->
-	<select id="selectByBookName" parameterType="String" resultMap="selectByBookName">
-		select book_id, book_name, company, writer, price from book
-		where
-		book_name like '%'||#{search_name}||'%'
+	<select id="selectByBookName" parameterType="String" resultMap="selectByBook">
+		select book_id, book_name, company, writer, price, context from book
+		where book_name like '%'||#{search_name}||'%'
 	</select>
-
+	
 	<!-- book_id 검색 -->
-	<select id="selectByBookId" parameterType="int"
-		resultType="com.web.bookrental.dto.Book">
+	<select id="selectByBookId" parameterType="int" resultMap="selectByBook">
 		select * from book where book_id=#{book_id}
 	</select>
 
 	<!-- 도서대여 -->
-	<update id="updatByRetalBook" parameterType="int">
-		update book set
-		rental_count=rental_count+1, rental_time=sysdate,
-		return_schedule_time=sysdate+10/24/60, rental_check=1 where
+	<update id="updatByRetalBook" parameterType="com.web.bookrental.dto.Book">
+		update book set	rental_count=rental_count+1, rental_time=#{rental_time},
+		return_schedule_time=#{return_schedule_time}, rental_check=#{rental_check} where
 		book_id=#{book_id}
+	</update>
+	
+	<!-- 도서반납 -->
+	<update id="updateByReturnBook" parameterType="com.web.bookrental.dto.Book">
+		update book set	return_time=#{return_time}, over_time_count=#{over_time_count},
+		rental_check=#{rental_check} where book_id=#{book_id}
 	</update>
 
 </mapper>
