@@ -41,4 +41,8 @@ public class BookRepository {
 
 	}
 
+	public ArrayList<Book> findByRentalBookName(String search_name) {
+		return mapper.selectByRentalBookName(search_name);
+	}
+
 }

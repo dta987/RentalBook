@@ -16,4 +16,6 @@ public interface BookMapper {
 
 	public int updateByReturnBook(Book book);
 
+	public ArrayList<Book> selectByRentalBookName(String search_name);
+
 }

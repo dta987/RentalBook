@@ -12,6 +12,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script src="../dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="../dist/sweetalert.css">
 
 <!-- w3 -->
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -27,7 +29,6 @@
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
 <title>Insert title here</title>
 </head>
 <body>
