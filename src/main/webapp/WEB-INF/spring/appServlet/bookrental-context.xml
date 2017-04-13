@@ -16,12 +16,25 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-			
+
+	<bean id="springDownload" class="com.web.bookrental.mvc.springDownloadController" />
+
+	<!-- 다운로드를 위한 뷰리졸버 -->
+	<bean id="downloadViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order">
+			<value>0</value>
+		</property>
+	</bean>
+
 	<!-- 뷰리졸버 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
+		<property name="order">
+			<value>1</value>
+		</property>
 	</bean>
 
 	<!-- 컴포넌트 스캔 -->

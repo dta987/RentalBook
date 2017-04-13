@@ -1,7 +1,5 @@
 package com.web.bookrental.dto;
 
-import java.sql.Date;
-
 public class Book {
 
 	private int book_id;

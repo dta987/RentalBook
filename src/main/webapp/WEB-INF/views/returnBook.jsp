@@ -58,8 +58,7 @@ body, h1, h2, h3, h4, h5, h6 {
 	<div class="w3-main w3-content w3-padding"
 		style="max-width: 1200px; margin-top: 100px">
 		<!-- 대여도서 목록-->
-		<div class="col-sm-offset-${myoffset} col-sm-${mywidth}"
-		style="height: 700px;">
+		<div class="col-sm-offset-${myoffset} col-sm-${mywidth}">
 		<table class="table">
 			<thead>
 				<tr>
@@ -71,7 +70,10 @@ body, h1, h2, h3, h4, h5, h6 {
 				</tr>
 			</thead>
 
-			<tbody>
+			<tbody>	
+				<c:if test="${empty rentalBookList}">
+				<td>대여 도서가 없습니다</td>
+				</c:if>
 				<c:forEach var="rentalBook" items="${rentalBookList}">
 					<tr>
 						<td>${rentalBook.book_name}</td>
@@ -90,12 +92,9 @@ body, h1, h2, h3, h4, h5, h6 {
 		<!-- Footer -->
  		<footer class="w3-row-padding w3-padding-32">
     	<div class="w3-center">
-      		<!-- 도서등록 버튼 -->
-			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-				onclick="document.getElementById('addbookPopup').style.display='block'"> 도서 등록 </a>
-			<!-- 도서동계 버튼 -->
-			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-				onclick="document.getElementById('addbookPopup').style.display='block'"> 도서 동계 </a>
+      		<!-- 도서목록 버튼 -->
+			<a href="${pageContext.request.contextPath}/book/searchbook?search_name=" 
+			class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"> 도서 목록 </a>
     	</div>
   		</footer>
 	</div>
@@ -120,6 +119,7 @@ body, h1, h2, h3, h4, h5, h6 {
 					},
 					success : function(result) {
 						swal(result);
+						location.reload();
 					},
 				});
 			});

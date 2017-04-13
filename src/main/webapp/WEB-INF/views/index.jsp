@@ -59,6 +59,9 @@ body, h1, h2, h3, h4, h5, h6 {
 		style="max-width: 1200px; margin-top: 100px">
 		<!-- 도서목록-->
 		<div class="w3-row-padding w3-padding-16 w3-center" id="food">
+			<c:if test="${empty bookList}">
+				<td>도서가 없습니다</td>
+			</c:if>
 			<c:forEach var="book" items="${bookList}">
 				<div class="w3-quarter">
 					<h4>
@@ -84,7 +87,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			<a href="${pageContext.request.contextPath}/book/rentalbooksearch?search_name=" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"> 도서 반납 </a>
 			<!-- 도서동계 버튼 -->
 			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-				onclick="document.getElementById('addbookPopup').style.display='block'"> 도서 동계 </a>
+				onclick="document.getElementById('statsbookPopup').style.display='block'"> 도서 동계 </a>
     	</div>
   		</footer>
 	</div>
@@ -146,7 +149,26 @@ body, h1, h2, h3, h4, h5, h6 {
 		</div>
 	</div>
 	
-
+	<!-- 도서통계 -->
+	<div id="statsbookPopup" class="w3-modal" style="z-index: 4">
+		<div class="w3-modal-content w3-animate-zoom">
+			<!-- TOP -->
+			<div class="w3-container w3-padding w3-blue">
+				<h2>도서통계</h2>
+			</div>
+			<div class="w3-panel">
+				<form id="statsbookForm" action="${pageContext.request.contextPath}/book/statsbook" method="get">
+					<label>파일명</label> 
+					<input id="file_name" name="file_name" class="w3-input w3-border w3-margin-bottom" type="text"> 
+					<div class="w3-section">
+						<a id="statsbookFormCancle" class="w3-button w3-red">취소  <i class="fa fa-remove"></i> </a> 
+						<a id="statsbookbtn" class="w3-button w3-light-grey w3-right">저장  <i	class="fa fa-paper-plane"></i> </a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
 
 
 
@@ -236,10 +258,20 @@ body, h1, h2, h3, h4, h5, h6 {
 			});
 		}
 		
+		//도서 통계
 		$(function() {
-			$("#returnbookbtn").click(function() {
-				
-			})
+			$("#statsbookbtn").click(function() {
+				if($("#file_name").val() != "") {
+					$("#statsbookForm").submit();
+				} else {
+					alert("파일명을 입력해주세요")
+				}
+			});
+			
+			$("#statsbookFormCancle").click(function() {
+				$("#file_name").val("");
+				$("#statsbookPopup").css("display", "none");
+			});
 		})
 			
 	</script>

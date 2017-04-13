@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.web.bookrental.dto.Book;
 import com.web.bookrental.mapper.BookMapper;
+import com.web.bookrental.util.Pageing;
 
 @Repository
 public class BookRepository {
@@ -43,6 +44,10 @@ public class BookRepository {
 
 	public ArrayList<Book> findByRentalBookName(String search_name) {
 		return mapper.selectByRentalBookName(search_name);
+	}
+
+	public int totalCount(String search_name) {
+		return mapper.bookCountBySelect(search_name);
 	}
 
 }

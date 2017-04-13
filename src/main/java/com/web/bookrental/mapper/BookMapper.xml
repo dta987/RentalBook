@@ -23,17 +23,22 @@
 		<result property="writer" column="writer" />
 		<result property="price" column="price" />
 		<result property="context" column="context" />
+		<result property="rental_count" column="rental_count" />
+		<result property="over_time_count" column="over_time_count" />
+		<result property="rental_time" column="rental_time" />
+		<result property="return_time" column="return_time" />
+		<result property="return_schedule_time" column="return_schedule_time" />
 		<result property="rental_check" column="rental_check" />
 	</resultMap>
 
 	<!-- book_name 검색 -->
 	<select id="selectByBookName" parameterType="String" resultMap="selectByBook">
-		select book_id, book_name, company, writer, price, context from book
-		where book_name like '%'||#{search_name}||'%'
+		select * from book where book_name like '%'||#{search_name}||'%' order by book_id desc
 	</select>
 
 	<!-- book_id 검색 -->
-	<select id="selectByBookId" parameterType="int" resultType="com.web.bookrental.dto.Book">
+	<select id="selectByBookId" parameterType="int"
+		resultType="com.web.bookrental.dto.Book">
 		select * from book where book_id=#{book_id}
 	</select>
 
@@ -47,10 +52,12 @@
 	</update>
 
 	<!-- 도서반납 -->
-	<update id="updateByReturnBook" parameterType="com.web.bookrental.dto.Book" >
+	<update id="updateByReturnBook" parameterType="com.web.bookrental.dto.Book">
 		update book set
-		over_time_count=#{over_time_count}, return_time=#{return_time},
-		rental_check=#{rental_check} where book_id=#{book_id}
+		over_time_count=#{over_time_count},
+		return_time=#{return_time},
+		rental_check=#{rental_check} where
+		book_id=#{book_id}
 	</update>
 
 	<!-- 대여도서 검색 리스트 -->
@@ -70,6 +77,11 @@
 		return_schedule_time from book
 		where book_name like
 		'%'||#{search_name}||'%' and rental_check=1
+	</select>
+
+	<!-- 총 도서수 -->
+	<select id="bookCountBySelect" parameterType="String" resultType="int">
+		select count(*) from book where book_name like %||#{secrch_name}||%
 	</select>
 
 
