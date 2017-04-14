@@ -14,31 +14,25 @@
 		values(#{book_id}, #{book_name}, #{company}, #{writer}, #{price},
 		#{context})
 	</insert>
-
-	<!-- 도서검색 리스트 -->
-	<resultMap type="com.web.bookrental.dto.Book" id="selectByBook">
+	
+	<!-- 이름으로 검색 -->
+	<resultMap type="com.web.bookrental.dto.Book" id="ResultSelectByBookName">
 		<id property="book_id" column="book_id" />
 		<result property="book_name" column="book_name" />
 		<result property="company" column="company" />
 		<result property="writer" column="writer" />
 		<result property="price" column="price" />
-		<result property="context" column="context" />
-		<result property="rental_count" column="rental_count" />
-		<result property="over_time_count" column="over_time_count" />
-		<result property="rental_time" column="rental_time" />
-		<result property="return_time" column="return_time" />
-		<result property="return_schedule_time" column="return_schedule_time" />
-		<result property="rental_check" column="rental_check" />
 	</resultMap>
 
-	<!-- book_name 검색 -->
-	<select id="selectByBookName" parameterType="String" resultMap="selectByBook">
-		select * from book where book_name like '%'||#{search_name}||'%' order by book_id desc
+	<!-- 이름으로 검색 -->
+	<select id="selectByBookName" parameterType="com.web.bookrental.dto.BookSearch" resultMap="ResultSelectByBookName">
+	select book_id, book_name, company, writer, price, ranking from
+	(select book_id, book_name, company, writer, price, rank() over(order by book_id desc) as ranking 
+	from book where book_name like '%'||#{search_name}||'%') where ranking between #{beginLow} and #{endRow}
 	</select>
 
-	<!-- book_id 검색 -->
-	<select id="selectByBookId" parameterType="int"
-		resultType="com.web.bookrental.dto.Book">
+	<!-- 아이디로 검색 -->
+	<select id="selectByBookId" parameterType="int"	resultType="com.web.bookrental.dto.Book">
 		select * from book where book_id=#{book_id}
 	</select>
 
@@ -56,12 +50,11 @@
 		update book set
 		over_time_count=#{over_time_count},
 		return_time=#{return_time},
-		rental_check=#{rental_check} where
-		book_id=#{book_id}
+		rental_check=#{rental_check}, return_schedule_time=0 where book_id=#{book_id}
 	</update>
 
 	<!-- 대여도서 검색 리스트 -->
-	<resultMap type="com.web.bookrental.dto.Book" id="selectByRentalBook">
+	<resultMap type="com.web.bookrental.dto.Book" id="ResultSelectByRentalBook">
 		<id property="book_id" column="book_id" />
 		<result property="book_name" column="book_name" />
 		<result property="company" column="company" />
@@ -71,18 +64,31 @@
 	</resultMap>
 
 	<!-- 대여도서 검색 -->
-	<select id="selectByRentalBookName" parameterType="String"
-		resultMap="selectByRentalBook">
-		select book_id, book_name, company, writer, rental_time,
-		return_schedule_time from book
-		where book_name like
-		'%'||#{search_name}||'%' and rental_check=1
+	<select id="selectByRentalBookName" parameterType="com.web.bookrental.dto.BookSearch" resultMap="ResultSelectByRentalBook">
+		select book_id, book_name, company, writer, rental_time, return_schedule_time, ranking 
+		from (select book_id, book_name, company, writer, rental_time, return_schedule_time, rank() over(order by book_id desc) as ranking
+		from book where book_name like '%'||#{search_name}||'%' and rental_check=1) 
+		where ranking between #{beginLow} and #{endRow}
 	</select>
 
-	<!-- 총 도서수 -->
-	<select id="bookCountBySelect" parameterType="String" resultType="int">
-		select count(*) from book where book_name like %||#{secrch_name}||%
+	<!-- 검색 도서수 -->
+	<select id="searchBookCountBySelect" parameterType="String" resultType="int">
+		select count(*) from book where book_name like '%'||#{search_name}||'%'
 	</select>
+	
+	<!-- 대여도서 수 -->
+	<select id="rentalBookCountBySelect" parameterType="String" resultType="int">
+		select count(*) from book where book_name like '%'||#{search_name}||'%' and rental_check=1
+	</select>
+	
+	<!-- 모든도서 검색 -->
+	<select id="selectByBookAll" resultType="com.web.bookrental.dto.Book">
+		select * from book
+	</select>
+	
+	
+	
+	
 
 
 </mapper>

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.web.bookrental.dto.Book;
+import com.web.bookrental.dto.BookSearch;
 import com.web.bookrental.mapper.BookMapper;
-import com.web.bookrental.util.Pageing;
 
 @Repository
 public class BookRepository {
@@ -21,8 +21,8 @@ public class BookRepository {
 	}
 
 	// 이름으로 검색
-	public ArrayList<Book> findByBookName(String search_name) {
-		return mapper.selectByBookName(search_name);
+	public ArrayList<Book> findByBookName(BookSearch booksearch) {
+		return mapper.selectByBookName(booksearch);
 	}
 
 	// 아이디로 검색
@@ -42,12 +42,20 @@ public class BookRepository {
 
 	}
 
-	public ArrayList<Book> findByRentalBookName(String search_name) {
-		return mapper.selectByRentalBookName(search_name);
+	public ArrayList<Book> findByRentalBookName(BookSearch booksearch) {
+		return mapper.selectByRentalBookName(booksearch);
 	}
 
-	public int totalCount(String search_name) {
-		return mapper.bookCountBySelect(search_name);
+	public int searchBookTotalCount(String search_name) {
+		return mapper.searchBookCountBySelect(search_name);
+	}
+
+	public ArrayList<Book> findBySelectAll() {
+		return mapper.selectByBookAll();
+	}
+
+	public int rental_totalCount(String search_name) {
+		return mapper.rentalBookCountBySelect(search_name);
 	}
 
 }

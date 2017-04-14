@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>	
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -52,7 +52,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				</form>
 			</div>
 		</div>
-	</div>	
+	</div>
 
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main w3-content w3-padding"
@@ -65,31 +65,59 @@ body, h1, h2, h3, h4, h5, h6 {
 			<c:forEach var="book" items="${bookList}">
 				<div class="w3-quarter">
 					<h4>
-					<!-- 도서명 -->
+						<!-- 도서명 -->
 						<a href="javascript:void(0)" id="detailbookPopupbtn"
 							onclick="detailbook(${book.getBook_id()})">
 							${book.getBook_name()} </a>
 					</h4>
-					<p><label>출판사 : </label> ${book.getCompany()} </p>
-					<p><label>저   자 : </label> ${book.getWriter()} </p>
-					<p><label>가 격 : </label> ${book.getPrice()} </p>
+					<p>
+						<label>출판사 : </label> ${book.getCompany()} | <label>저 자 :
+						</label> ${book.getWriter()}
+					</p>
 				</div>
 			</c:forEach>
 		</div>
-		
+
+		<div class="w3-center">
+			<div class="w3-bar">
+				<c:if test="${beginPage != 0}">
+					<c:forEach begin="${beginPage}" end="${endPage}" var="page">
+						<c:if test="${page == selectPage && page != 0}">
+							<a
+								href="${pageContext.request.contextPath}/book/searchbook?search_name=${search_name}&selectPage=${page}"
+								class="w3-button w3-green">${page}</a>
+						</c:if>
+						<c:if test="${page != selectPage && page != 0}">
+							<a
+								href="${pageContext.request.contextPath}/book/searchbook?search_name=${search_name}&selectPage=${page}"
+								class="w3-button">${page}</a>
+						</c:if>
+					</c:forEach>
+				</c:if>
+			</div>
+		</div>
+		</footer>
+
 		<!-- Footer -->
- 		<footer class="w3-row-padding w3-padding-32">
-    	<div class="w3-center">
-      		<!-- 도서등록 버튼 -->
-			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-				onclick="document.getElementById('addbookPopup').style.display='block'"> 도서 등록 </a>
+		<footer class="w3-row-padding w3-padding-32">
+		<div class="w3-center">
+			<!-- 도서등록 버튼 -->
+			<a href="javascript:void(0)"
+				class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
+				onclick="document.getElementById('addbookPopup').style.display='block'">
+				도서 등록 </a>
 			<!-- 도서반납 버튼 -->
-			<a href="${pageContext.request.contextPath}/book/rentalbooksearch?search_name=" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"> 도서 반납 </a>
+			<a
+				href="${pageContext.request.contextPath}/book/rentalbooksearch?search_name="
+				class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align">
+				도서 반납 </a>
 			<!-- 도서동계 버튼 -->
-			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-				onclick="document.getElementById('statsbookPopup').style.display='block'"> 도서 동계 </a>
-    	</div>
-  		</footer>
+			<a href="javascript:void(0)"
+				class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
+				onclick="document.getElementById('statsbookPopup').style.display='block'">
+				도서 동계 </a>
+		</div>
+		</footer>
 	</div>
 
 	<!-- 도서등록 양식 -->
@@ -100,20 +128,27 @@ body, h1, h2, h3, h4, h5, h6 {
 				<h2>도서등록</h2>
 			</div>
 			<div class="w3-panel">
-				<form id="addbookForm" action="${pageContext.request.contextPath}/book/addbook" method="post">
-					<label>도서명</label> 
-					<input id="book_name" name="book_name" class="w3-input w3-border w3-margin-bottom" type="text"> 
-					<label>출판사</label>
-					<input id="company" name="company" class="w3-input w3-border w3-margin-bottom" type="text"> 
-					<label>저   자</label> 
-					<input id="writer" name="writer" class="w3-input w3-border w3-margin-bottom" type="text"> 
-					<label>가   격</label> 
-					<input id="price" name="price" class="w3-input w3-border w3-margin-bottom" type="number">
-					<label>내   용</label> 
-					<textarea rows="" cols="" id="context" name="context" class="w3-input w3-border w3-margin-bottom" style="height: 150px; resize: none;">	</textarea>
+				<form id="addbookForm"
+					action="${pageContext.request.contextPath}/book/addbook"
+					method="post">
+					<label>도서명</label> <input id="book_name" name="book_name"
+						class="w3-input w3-border w3-margin-bottom" type="text"> <label>출판사</label>
+					<input id="company" name="company"
+						class="w3-input w3-border w3-margin-bottom" type="text"> <label>저
+						자</label> <input id="writer" name="writer"
+						class="w3-input w3-border w3-margin-bottom" type="text"> <label>가
+						격</label> <input id="price" name="price"
+						class="w3-input w3-border w3-margin-bottom" type="number">
+					<label>내 용</label>
+					<textarea rows="" cols="" id="context" name="context"
+						class="w3-input w3-border w3-margin-bottom"
+						style="height: 150px; resize: none;">	</textarea>
 					<div class="w3-section">
-						<a id="addbookFormCancle" class="w3-button w3-red">취소  <i class="fa fa-remove"></i> </a> 
-						<a id="addbook" class="w3-button w3-light-grey w3-right">저장  <i	class="fa fa-paper-plane"></i> </a>
+						<a id="addbookFormCancle" class="w3-button w3-red">취소  <i
+							class="fa fa-remove"></i>
+						</a> <a id="addbook" class="w3-button w3-light-grey w3-right">저장  <i
+							class="fa fa-paper-plane"></i>
+						</a>
 					</div>
 				</form>
 			</div>
@@ -130,15 +165,19 @@ body, h1, h2, h3, h4, h5, h6 {
 					class="w3-button w3-right w3-xxlarge"><i
 					class="fa fa-remove"></i> </span>
 				<div class="w3-padding-64 w3-center">
-					<h3 id="detali_book_name"> <!-- 도서명 --> </h3>
-						<label>출판사 : </label><font id="detali_company"> <!-- 출판사 --> </font> 
-						<label>저   자 : </label><font id="detali_writer"> <!-- 저자 --> </font>
-						<div class="w3-left-align w3-padding-xxlarge">
-							<textarea readonly="readonly" id="detali_context" name="context"
-								class="w3-input w3-margin-bottom" style="height: 200px; resize: none; border: 0;">
+					<h3 id="detali_book_name">
+						<!-- 도서명 -->
+					</h3>
+					<label>출판사 : </label><font id="detali_company"> <!-- 출판사 -->
+					</font> <label>저 자 : </label><font id="detali_writer"> <!-- 저자 -->
+					</font>
+					<div class="w3-left-align w3-padding-xxlarge">
+						<textarea readonly="readonly" id="detali_context" name="context"
+							class="w3-input w3-margin-bottom"
+							style="height: 200px; resize: none; border: 0;">
 								<!-- 내용 -->
 							</textarea>
-						</div>
+					</div>
 				</div>
 
 				<!-- 도서 대여 -->
@@ -148,7 +187,7 @@ body, h1, h2, h3, h4, h5, h6 {
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 도서통계 -->
 	<div id="statsbookPopup" class="w3-modal" style="z-index: 4">
 		<div class="w3-modal-content w3-animate-zoom">
@@ -157,18 +196,26 @@ body, h1, h2, h3, h4, h5, h6 {
 				<h2>도서통계</h2>
 			</div>
 			<div class="w3-panel">
-				<form id="statsbookForm" action="${pageContext.request.contextPath}/book/statsbook" method="get">
-					<label>파일명</label> 
-					<input id="file_name" name="file_name" class="w3-input w3-border w3-margin-bottom" type="text"> 
+				<form id="statsbookForm"
+					action="${pageContext.request.contextPath}/book/statsbook"
+					method="get">
+					<label>파일명</label> <input id="file_name" name="file_name"
+						class="w3-input w3-border w3-margin-bottom" type="text">
+					<label>형태</label> 
+						<input id="extension" name="extension" type="radio" value="text"> .txt
+						<input id="extension" name="extension" type="radio" value="xlsx"> .xlsx
 					<div class="w3-section">
-						<a id="statsbookFormCancle" class="w3-button w3-red">취소  <i class="fa fa-remove"></i> </a> 
-						<a id="statsbookbtn" class="w3-button w3-light-grey w3-right">저장  <i	class="fa fa-paper-plane"></i> </a>
+						<a id="statsbookFormCancle" class="w3-button w3-red">취소  <i
+							class="fa fa-remove"></i>
+						</a> <a id="statsbookbtn" class="w3-button w3-light-grey w3-right">저장
+							 <i class="fa fa-paper-plane"></i>
+						</a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
+
 
 
 
@@ -262,9 +309,15 @@ body, h1, h2, h3, h4, h5, h6 {
 		$(function() {
 			$("#statsbookbtn").click(function() {
 				if($("#file_name").val() != "") {
-					$("#statsbookForm").submit();
+					 var stringRegx = /[~!@\#$%<>^&*\()\-=+_\’.]/gi;
+					 if(stringRegx.test($("#file_name").val())) {
+						 alert("특수문자는 사용할수없습니다");
+						 return false;
+					 } else {
+						 $("#statsbookForm").submit();
+					 }
 				} else {
-					alert("파일명을 입력해주세요")
+					alert("파일명을 입력해주세요");
 				}
 			});
 			

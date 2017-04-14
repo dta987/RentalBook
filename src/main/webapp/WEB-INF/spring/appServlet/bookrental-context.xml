@@ -17,7 +17,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
 
-	<bean id="springDownload" class="com.web.bookrental.mvc.springDownloadController" />
+	<bean id="Download" class="com.web.bookrental.mvc.DownLoadController" />
 
 	<!-- 다운로드를 위한 뷰리졸버 -->
 	<bean id="downloadViewResolver"

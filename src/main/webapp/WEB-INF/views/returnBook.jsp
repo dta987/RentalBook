@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/common.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>	
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -52,51 +52,71 @@ body, h1, h2, h3, h4, h5, h6 {
 				</form>
 			</div>
 		</div>
-	</div>	
+	</div>
 
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main w3-content w3-padding"
 		style="max-width: 1200px; margin-top: 100px">
 		<!-- 대여도서 목록-->
 		<div class="col-sm-offset-${myoffset} col-sm-${mywidth}">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>도서명</th>
-					<th>출판사/저자</th>
-					<th>대여시간</th>
-					<th>반납예정시간</th>
-					<th>반납</th>
-				</tr>
-			</thead>
-
-			<tbody>	
-				<c:if test="${empty rentalBookList}">
-				<td>대여 도서가 없습니다</td>
-				</c:if>
-				<c:forEach var="rentalBook" items="${rentalBookList}">
+			<table class="table">
+				<thead>
 					<tr>
-						<td>${rentalBook.book_name}</td>
-						<td>${rentalBook.company} / ${rentalBook.writer}</td>
-						<td>${rentalBook.rental_time}</td>
-						<td>${rentalBook.return_schedule_time}</td>
-						<td><a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
-						onclick="returnbookbtn(${rentalBook.book_id}, '${rentalBook.book_name}')"> 도서 반납 </a>
-						</td>
+						<th>도서명</th>
+						<th>출판사/저자</th>
+						<th>대여시간</th>
+						<th>반납예정시간</th>
+						<th>반납</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+
+				<tbody>
+					<c:if test="${empty rentalBookList}">
+						<td>대여 도서가 없습니다</td>
+					</c:if>
+					<c:forEach var="rentalBook" items="${rentalBookList}">
+						<tr>
+							<td>${rentalBook.book_name}</td>
+							<td>${rentalBook.company}/ ${rentalBook.writer}</td>
+							<td>${rentalBook.rental_time}</td>
+							<td>${rentalBook.return_schedule_time}</td>
+							<td><a href="javascript:void(0)"
+								class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"
+								onclick="returnbookbtn(${rentalBook.book_id}, '${rentalBook.book_name}')">
+									도서 반납 </a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
-		
+
+		<div class="w3-center">
+			<div class="w3-bar">
+				<c:forEach begin="${beginPage}" end="${endPage}" var="page">
+					<c:if test="${page == selectPage && page != 0}">
+						<a
+							href="${pageContext.request.contextPath}/book/rentalbooksearch?search_name=${search_name}&selectPage=${page}"
+							class="w3-button w3-green">${page}</a>
+					</c:if>
+					<c:if test="${page != selectPage && page != 0}">
+						<a
+							href="${pageContext.request.contextPath}/book/rentalbooksearch?search_name=${search_name}&selectPage=${page}"
+							class="w3-button">${page}</a>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+
 		<!-- Footer -->
- 		<footer class="w3-row-padding w3-padding-32">
-    	<div class="w3-center">
-      		<!-- 도서목록 버튼 -->
-			<a href="${pageContext.request.contextPath}/book/searchbook?search_name=" 
-			class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align"> 도서 목록 </a>
-    	</div>
-  		</footer>
+		<footer class="w3-row-padding w3-padding-32">
+		<div class="w3-center">
+			<!-- 도서목록 버튼 -->
+			<a
+				href="${pageContext.request.contextPath}/book/searchbook?search_name="
+				class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align">
+				도서 목록 </a>
+		</div>
+		</footer>
 	</div>
 
 

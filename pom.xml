@@ -16,6 +16,7 @@
 
 
 	<dependencies>
+		
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -28,30 +29,17 @@
 			<version>1.2.5</version>
 		</dependency>
 
-		<!-- jackson -->
-		<!-- <dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.8.0</version>
-		</dependency> -->
-		
-		 <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-        </dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.8.7</version>
 		</dependency>
-
-	<!-- 	<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.8.6</version>
-		</dependency> -->
 
 		<!-- json -->
 		<dependency>
@@ -68,6 +56,15 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc14-10.2.0.4.0.jar</systemPath>
 		</dependency>
+		
+		<!-- Access Microsoft Format Files -->
+		<!-- 엑셀파일 읽기 poi 2007년 이후버전 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.13</version>
+		</dependency>
+			
 
 		<!-- spring jdbc -->
 		<dependency>
@@ -204,6 +201,7 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

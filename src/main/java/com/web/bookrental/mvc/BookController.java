@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.bookrental.dto.Book;
-import com.web.bookrental.util.Pageing;
+import com.web.bookrental.dto.BookSearch;
 
 @Controller
 public class BookController {
@@ -26,20 +26,23 @@ public class BookController {
 		System.out.println("-도서등록-");
 		int cnt = service.addBook(book);
 
-		return "index";
+		return "redirect:/book/searchbook";
 	}
 
 	// 도서검색
 	@RequestMapping(value = "/searchbook", method = RequestMethod.GET)
-	public String searchBook(Model model, String search_name) {
+	public String searchBook(Model model, BookSearch booksearch) {
 		System.out.println("-도서검색-");
-		System.out.println("도서명 : " + search_name);
+		System.out.println("도서명 : " + booksearch.getSearch_name());
 		
-		ArrayList<Book> bookList = service.searchBook(search_name);
-
-		// 검색결과목록
+		ArrayList<Book> bookList = service.searchBook(booksearch);
+				
 		model.addAttribute("bookList", bookList);
-
+		model.addAttribute("beginPage", booksearch.getBeginPage());
+		model.addAttribute("endPage", booksearch.getEndPage());
+		model.addAttribute("selectPage", booksearch.getSelectPage());
+		model.addAttribute("search_name", booksearch.getSearch_name());
+		
 		return "index";
 	}
 
@@ -68,12 +71,16 @@ public class BookController {
 
 	// 대여도서 검색
 	@RequestMapping(value = "/rentalbooksearch", method = RequestMethod.GET)
-	public String rentalBook(Model model, String search_name) {
+	public String rentalBook(Model model, BookSearch booksearch) {
 		System.out.println("-대여도서 검색-");
 
-		ArrayList<Book> rentalBookList = service.rentalBookSearch(search_name);
+		ArrayList<Book> rentalBookList = service.rentalBookSearch(booksearch);
 
 		model.addAttribute("rentalBookList", rentalBookList);
+		model.addAttribute("beginPage", booksearch.getBeginPage());
+		model.addAttribute("endPage", booksearch.getEndPage());
+		model.addAttribute("selectPage", booksearch.getSelectPage());
+		model.addAttribute("search_name", booksearch.getSearch_name());
 
 		return "returnBook";
 	}
@@ -90,13 +97,13 @@ public class BookController {
 
 	//도서파일 만들기
 	@RequestMapping(value = "/statsbook", method = RequestMethod.GET)
-	public ModelAndView statsBook(String file_name) {
+	public ModelAndView statsBook(String file_name, String extension) {
 		System.out.println("-도서통계-");
+		System.out.println(extension);
 		
-		File file = service.statsBook(file_name);	
+		File file = service.statsBook(file_name, extension);	
 		
-		return new ModelAndView("springDownload", "downloadFile", file);
-
+		return new ModelAndView("Download", "downloadFile", file);
 	}
 
 }
